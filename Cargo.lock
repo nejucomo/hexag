@@ -1593,6 +1593,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "hexohexes"
+version = "0.1.0"
+
+[[package]]
 name = "icu_collections"
 version = "2.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2032,10 +2036,6 @@ dependencies = [
  "log",
  "logging-options",
 ]
-
-[[package]]
-name = "modmad-axial-index"
-version = "0.1.0"
 
 [[package]]
 name = "modmad-hex-widget"

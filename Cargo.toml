@@ -1,5 +1,5 @@
 [workspace]
-members = ["app", "hex-widget", "axial-index"]
+members = ["app", "hex-widget", "hexohexes"]
 resolver = "3"
 
 [workspace.package]
