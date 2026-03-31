@@ -2034,6 +2034,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "modmad-hex-widget"
+version = "0.1.0"
+dependencies = [
+ "derive-new",
+ "egui",
+ "hexing",
+]
+
+[[package]]
 name = "moxcms"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
