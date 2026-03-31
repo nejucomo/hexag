@@ -2034,6 +2034,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "modmad-axial-index"
+version = "0.1.0"
+
+[[package]]
 name = "modmad-hex-widget"
 version = "0.1.0"
 dependencies = [
