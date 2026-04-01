@@ -2,8 +2,11 @@ use std::ops::RangeInclusive;
 
 use egui::{Pos2, Rect, remap};
 
+/// # TODO
+///
+/// This feels like it should be in `egui` or I'm doing a non-standard approach. Next step: Investigate `Painter` and shapelists and transforms.
 #[derive(Debug)]
-pub struct Projector {
+pub(crate) struct Projector {
     x_from: RangeInclusive<f32>,
     y_from: RangeInclusive<f32>,
     x_to: RangeInclusive<f32>,
@@ -11,7 +14,7 @@ pub struct Projector {
 }
 
 impl Projector {
-    pub fn new(source: Rect, dest: Rect) -> Self {
+    pub(crate) fn new(source: Rect, dest: Rect) -> Self {
         let Rect {
             min: source_min,
             max: source_max,
@@ -31,7 +34,7 @@ impl Projector {
     }
 
     /// Project a point in source coordinates to dest coordinates
-    pub fn project(&self, src: Pos2) -> Pos2 {
+    pub(crate) fn project(&self, src: Pos2) -> Pos2 {
         Pos2::new(
             remap(src.x, self.x_from.clone(), self.x_to.clone()),
             remap(src.y, self.y_from.clone(), self.y_to.clone()),

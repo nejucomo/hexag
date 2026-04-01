@@ -3,19 +3,12 @@ use eframe::egui::{
     Widget,
 };
 use eframe::{Frame, NativeOptions, run_native};
-use hexohexes::Board;
-use hexohexes_egui::{BoardWidget, HexOrientation};
+use hexohexes::AxialBounds;
+use hexohexes_egui::{HexOrientation, Wireframe};
 
 mod select_menu;
 
 fn main() -> eframe::Result<()> {
-    let radius = 3;
-    let app = App {
-        board: Board::new_defaults(radius),
-        hexor: HexOrientation::default(),
-        radius,
-    };
-
     run_native(
         env!("CARGO_PKG_NAME"),
         NativeOptions {
@@ -23,21 +16,32 @@ fn main() -> eframe::Result<()> {
             persist_window: false,
             ..Default::default()
         },
-        Box::new(|_cc| Ok(Box::new(app))),
+        Box::new(|_cc| Ok(Box::new(App::default()))),
     )
 }
 
 struct App {
-    board: Board<()>,
+    bounds: AxialBounds,
     hexor: HexOrientation,
     radius: usize,
 }
 
+impl Default for App {
+    fn default() -> Self {
+        let radius = 3;
+        Self {
+            bounds: AxialBounds::new(radius),
+            hexor: HexOrientation::default(),
+            radius,
+        }
+    }
+}
+
 impl eframe::App for App {
     fn update(&mut self, ctx: &Context, _frame: &mut Frame) {
-        if self.radius != self.board.radius() {
+        if self.radius != self.bounds.radius() {
             // The user changed the radius, reset the board:
-            self.board = Board::new_defaults(self.radius);
+            self.bounds = AxialBounds::new(self.radius);
         }
 
         TopBottomPanel::top("my_panel").show(ctx, |ui| {
@@ -63,6 +67,6 @@ impl eframe::App for App {
 
 impl Widget for &mut App {
     fn ui(self, ui: &mut Ui) -> Response {
-        ui.add(BoardWidget::new(&self.board, self.hexor))
+        ui.add(Wireframe::new(&self.bounds, self.hexor))
     }
 }

@@ -1,24 +1,28 @@
 use derive_new::new;
 use egui::{Color32, Response, Sense, Stroke, Ui, Widget};
-use hexohexes::Board;
+use hexohexes::AxialBounds;
 
 use crate::ext::AxialBoundsExt as _;
-use crate::{AxialsExt as _, HexOrientation, Projector};
+use crate::projector::Projector;
+use crate::{AxialsExt as _, HexOrientation};
 
+/// A [Widget] for [AxialBounds] for displaying a wireframe of hexes with hover highlighting support
 #[derive(Debug, new)]
-pub struct BoardWidget<'a, T> {
-    board: &'a Board<T>,
+pub struct Wireframe<'a> {
+    bounds: &'a AxialBounds,
     hexor: HexOrientation,
 }
 
-impl<'a, T> Widget for BoardWidget<'a, T> {
+impl<'a> Widget for Wireframe<'a> {
     fn ui(self, ui: &mut Ui) -> Response {
+        // TODO: Configurable sizing behavior
         let resp = ui.allocate_rect(ui.max_rect(), Sense::hover());
 
-        let projector = Projector::new(self.board.bounding_rect(self.hexor), ui.max_rect());
+        // TODO: Configurable aspect ratio
+        let projector = Projector::new(self.bounds.bounding_rect(self.hexor), ui.max_rect());
         let painter = ui.painter();
 
-        for ax in self.board.iter_axials() {
+        for ax in self.bounds.iter_axials() {
             painter.circle_stroke(
                 projector.project(ax.center_pos(self.hexor)),
                 10.0,
