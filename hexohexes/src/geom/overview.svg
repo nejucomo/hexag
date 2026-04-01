@@ -26,7 +26,6 @@
       font-size: 16px;
     }
   </style>
-  <rect width="900" height="420" stroke="green" fill="none" />
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5"
             markerWidth="0.0583333" markerHeight="0.0583333"
