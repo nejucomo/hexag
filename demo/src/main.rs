@@ -37,6 +37,16 @@ impl eframe::App for App {
                         ui.ctx().send_viewport_cmd(ViewportCommand::Close);
                     }
                 });
+                ui.menu_button("Orientation", |ui| {
+                    use HexOrientation::*;
+
+                    let r1 = ui.selectable_value(&mut self.hexor, FlatTop, "Flat Top");
+                    let r2 = ui.selectable_value(&mut self.hexor, PointyTop, "Pointy Top");
+
+                    if r1.clicked() || r2.clicked() {
+                        ui.close();
+                    }
+                });
             });
         });
         CentralPanel::default().show(ctx, |ui| ui.add(self));

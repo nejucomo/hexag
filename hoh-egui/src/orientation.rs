@@ -17,7 +17,7 @@ const BASIS_FLAT_R: Vec2 = Vec2::new(0.0, 2.0 * SHORT_RADIUS);
 const BASIS_POINTY_Q: Vec2 = Vec2::new(2.0 * SHORT_RADIUS, 0.0);
 const BASIS_POINTY_R: Vec2 = Vec2::new(SHORT_RADIUS, 1.5 * LONG_RADIUS);
 
-#[derive(Copy, Clone, Debug, Default)]
+#[derive(Copy, Clone, Debug, Default, Eq, PartialEq)]
 pub enum HexOrientation {
     #[default]
     FlatTop,
