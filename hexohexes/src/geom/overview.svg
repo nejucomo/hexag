@@ -2,14 +2,14 @@
   <style>
     text {
       font-family: system-ui, sans-serif;
-      fill: black;
+      fill: currentColor;
     }
     .axis, .tick {
       stroke: black;
       stroke-width: 0.0125;
     }
     .circle {
-      stroke: #666;
+      stroke: currentColor;
       stroke-width: 0.0166667;
       fill: none;
     }
