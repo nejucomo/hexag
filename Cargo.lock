@@ -1652,6 +1652,11 @@ dependencies = [
 [[package]]
 name = "hexohexes-egui-demo"
 version = "0.1.0"
+dependencies = [
+ "eframe",
+ "hexohexes",
+ "hexohexes-egui",
+]
 
 [[package]]
 name = "icu_collections"

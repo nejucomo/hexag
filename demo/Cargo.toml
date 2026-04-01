@@ -4,3 +4,6 @@ version = "0.1.0"
 edition.workspace = true
 
 [dependencies]
+eframe.workspace = true
+hexohexes.workspace = true
+hexohexes-egui.workspace = true
