@@ -4,11 +4,12 @@ use eframe::egui::{
 };
 use eframe::{Frame, NativeOptions, run_native};
 use hexohexes::Board;
-use hexohexes_egui::BoardFrame;
+use hexohexes_egui::{BoardWidget, HexOrientation};
 
 fn main() -> eframe::Result<()> {
     let app = App {
         board: Board::new_defaults(3),
+        hexor: HexOrientation::default(),
     };
 
     run_native(
@@ -24,6 +25,7 @@ fn main() -> eframe::Result<()> {
 
 struct App {
     board: Board<()>,
+    hexor: HexOrientation,
 }
 
 impl eframe::App for App {
@@ -43,6 +45,6 @@ impl eframe::App for App {
 
 impl Widget for &mut App {
     fn ui(self, ui: &mut Ui) -> Response {
-        ui.add(BoardFrame::new(&self.board))
+        ui.add(BoardWidget::new(&self.board, self.hexor))
     }
 }

@@ -1,5 +1,5 @@
 [workspace]
-members = ["app", "hexohexes", "hoh-egui", "demo"]
+members = ["hexohexes", "hoh-egui", "demo"]
 resolver = "3"
 
 [workspace.package]
