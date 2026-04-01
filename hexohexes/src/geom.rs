@@ -2,9 +2,9 @@
 //!
 //! The base geometry is defined for an equilateral hexagon inscribed in the rectangle from `(-1, -1)` to `(1, 1)`. There are two supported orientations, defined by the symmetrically named constants in [flat_top] and [pointy_top].
 //!
-//! # Flat Top Orientation
+//! # Diagrams
 //!
-#![doc = include_str!("geom/flat_top.svg")]
+#![doc = include_str!("geom/overview.svg")]
 mod orientation;
 mod pt;
 
