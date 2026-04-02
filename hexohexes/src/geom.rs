@@ -28,6 +28,7 @@ pub mod flat_top {
     pub const BASIS_R: Pt = Pt::new(0.0, 2.0 * SHORT_RADIUS);
 }
 
+/// Constants for the pointy-top orientation
 pub mod pointy_top {
     use super::*;
 
