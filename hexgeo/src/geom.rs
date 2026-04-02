@@ -6,11 +6,11 @@
 //!
 #![doc = include_str!("geom/overview.svg")]
 
+use emath::{Pos2, Vec2};
+
 mod orientation;
-mod pt;
 
 pub use self::orientation::{DHO, HexOrientation};
-pub use self::pt::Pt;
 
 /// Taken from `std` experimental nightly docs; backported for stable:
 const SQRT_3: f32 = 1.732050807568877293527446341505872367_f32;
@@ -20,20 +20,21 @@ pub const SHORT_RADIUS: f32 = SQRT_3 / 2.0;
 
 /// Constants for the flat-top orientation
 pub mod flat_top {
+
     use super::*;
 
-    pub const BOTTOM_LEFT: Pt = Pt::new(LONG_RADIUS, SHORT_RADIUS);
-    pub const WIDTH_AND_HEIGHT: (f32, f32) = (LONG_RADIUS, SHORT_RADIUS);
-    pub const BASIS_Q: Pt = Pt::new(1.5 * LONG_RADIUS, SHORT_RADIUS);
-    pub const BASIS_R: Pt = Pt::new(0.0, 2.0 * SHORT_RADIUS);
+    // pub const BOTTOM_LEFT: Vec2 = Vec2::new(LONG_RADIUS, SHORT_RADIUS);
+    pub const WIDTH_AND_HEIGHT: Vec2 = Vec2::new(LONG_RADIUS, SHORT_RADIUS);
+    pub const BASIS_Q: Vec2 = Vec2::new(1.5 * LONG_RADIUS, SHORT_RADIUS);
+    pub const BASIS_R: Vec2 = Vec2::new(0.0, 2.0 * SHORT_RADIUS);
     // TODO: These were just copy-pasta and may not be precise
-    pub const VERTICES: [Pt; 6] = [
-        Pt::new(0.0, -1.0),
-        Pt::new(0.8660254, -0.5),
-        Pt::new(0.8660254, 0.5),
-        Pt::new(0.0, 1.0),
-        Pt::new(-0.8660254, 0.5),
-        Pt::new(-0.8660254, -0.5),
+    pub const VERTICES: [Pos2; 6] = [
+        Pos2::new(0.0, -1.0),
+        Pos2::new(0.8660254, -0.5),
+        Pos2::new(0.8660254, 0.5),
+        Pos2::new(0.0, 1.0),
+        Pos2::new(-0.8660254, 0.5),
+        Pos2::new(-0.8660254, -0.5),
     ];
 }
 
@@ -41,17 +42,17 @@ pub mod flat_top {
 pub mod pointy_top {
     use super::*;
 
-    pub const BOTTOM_LEFT: Pt = Pt::new(SHORT_RADIUS, LONG_RADIUS);
-    pub const WIDTH_AND_HEIGHT: (f32, f32) = (SHORT_RADIUS, LONG_RADIUS);
-    pub const BASIS_Q: Pt = Pt::new(2.0 * SHORT_RADIUS, 0.0);
-    pub const BASIS_R: Pt = Pt::new(SHORT_RADIUS, 1.5 * LONG_RADIUS);
-    pub const VERTICES: [Pt; 6] = [
-        Pt::new(-1.0, 0.0),
-        Pt::new(-0.5, -0.8660254),
-        Pt::new(0.5, -0.8660254),
-        Pt::new(1.0, 0.0),
-        Pt::new(0.5, 0.8660254),
-        Pt::new(-0.5, 0.8660254),
+    // pub const BOTTOM_LEFT: Vec2 = Vec2::new(SHORT_RADIUS, LONG_RADIUS);
+    pub const WIDTH_AND_HEIGHT: Vec2 = Vec2::new(SHORT_RADIUS, LONG_RADIUS);
+    pub const BASIS_Q: Vec2 = Vec2::new(2.0 * SHORT_RADIUS, 0.0);
+    pub const BASIS_R: Vec2 = Vec2::new(SHORT_RADIUS, 1.5 * LONG_RADIUS);
+    pub const VERTICES: [Pos2; 6] = [
+        Pos2::new(-1.0, 0.0),
+        Pos2::new(-0.5, -0.8660254),
+        Pos2::new(0.5, -0.8660254),
+        Pos2::new(1.0, 0.0),
+        Pos2::new(0.5, 0.8660254),
+        Pos2::new(-0.5, 0.8660254),
     ];
 }
 
@@ -64,22 +65,22 @@ macro_rules! def_static_orientation {
 
         impl HexOrientation for $name {
             #[inline]
-            fn width_and_height(self) -> (f32, f32) {
+            fn width_and_height(self) -> Vec2 {
                 $cmod::WIDTH_AND_HEIGHT
             }
 
             #[inline]
-            fn q_basis(self) -> Pt {
+            fn q_basis(self) -> Vec2 {
                 $cmod::BASIS_Q
             }
 
             #[inline]
-            fn r_basis(self) -> Pt {
+            fn r_basis(self) -> Vec2 {
                 $cmod::BASIS_R
             }
 
             #[inline]
-            fn vertices(self) -> [Pt; 6] {
+            fn vertices(self) -> [Pos2; 6] {
                 $cmod::VERTICES
             }
         }

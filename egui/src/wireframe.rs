@@ -1,6 +1,6 @@
 use derive_new::new;
 use egui::{Color32, Response, Sense, Stroke, Ui, Widget};
-use hexgeo::AxialBounds;
+use hexgeo::RadialIndexMap;
 
 use crate::ext::AxialBoundsExt as _;
 use crate::projector::Projector;
@@ -9,7 +9,7 @@ use crate::{AxialsExt as _, HexOrientation};
 /// A [Widget] for [AxialBounds] for displaying a wireframe of hexes with hover highlighting support
 #[derive(Debug, new)]
 pub struct Wireframe<'a> {
-    bounds: &'a AxialBounds,
+    bounds: &'a RadialIndexMap,
     hexor: HexOrientation,
 }
 

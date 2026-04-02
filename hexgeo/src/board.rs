@@ -1,10 +1,10 @@
 use std::ops::{Deref, Index, IndexMut};
 
-use crate::{AxialBounds, Axials};
+use crate::{Axials, RadialIndexMap};
 
 #[derive(Clone, Debug)]
 pub struct Board<T> {
-    bounds: AxialBounds,
+    rim: RadialIndexMap,
     data: Vec<T>,
 }
 
@@ -13,32 +13,32 @@ impl<T> Board<T> {
     where
         T: Default,
     {
-        let bounds = AxialBounds::new(radius);
+        let bounds = RadialIndexMap::new(radius);
 
         let mut data = Vec::with_capacity(bounds.count());
         data.resize_with(bounds.count(), T::default);
 
-        Board { bounds, data }
+        Board { rim: bounds, data }
     }
 
-    pub fn bounds(&self) -> &AxialBounds {
-        &self.bounds
+    pub fn rim(&self) -> &RadialIndexMap {
+        &self.rim
     }
 
     pub fn get(&self, ax: Axials) -> Option<&T> {
-        self.bounds.axial_to_index(ax).map(|ix| &self.data[ix])
+        self.rim.axial_to_index(ax).map(|ix| &self.data[ix])
     }
 
     pub fn get_mut(&mut self, ax: Axials) -> Option<&mut T> {
-        self.bounds.axial_to_index(ax).map(|ix| &mut self.data[ix])
+        self.rim.axial_to_index(ax).map(|ix| &mut self.data[ix])
     }
 }
 
 impl<T> Deref for Board<T> {
-    type Target = AxialBounds;
+    type Target = RadialIndexMap;
 
     fn deref(&self) -> &Self::Target {
-        &self.bounds
+        &self.rim
     }
 }
 
@@ -46,12 +46,12 @@ impl<T> Index<Axials> for Board<T> {
     type Output = T;
 
     fn index(&self, ax: Axials) -> &Self::Output {
-        &self.data[self.bounds.require_axial_to_index::<Self>(ax)]
+        &self.data[self.rim.require_axial_to_index::<Self>(ax)]
     }
 }
 
 impl<T> IndexMut<Axials> for Board<T> {
     fn index_mut(&mut self, ax: Axials) -> &mut Self::Output {
-        &mut self.data[self.bounds.require_axial_to_index::<Self>(ax)]
+        &mut self.data[self.rim.require_axial_to_index::<Self>(ax)]
     }
 }

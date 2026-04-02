@@ -1,4 +1,4 @@
-//! Hex of hexes for hexagon-tiled games
+//! `hexgeo` - <u>hex</u>agonal <u>geo</u>metry and tiling utilities
 //!
 //! This crate, similar to many hexagon graphics/games trait relies heavily on the superb [Hexagonal Grids from Red Blob Games](https://www.redblobgames.com/grids/hexagons/).
 //!
@@ -11,9 +11,9 @@
 
 mod axials;
 mod board;
-mod bounds;
 
 pub mod geom;
+pub mod radial;
 pub use self::axials::Axials;
 pub use self::board::Board;
-pub use self::bounds::AxialBounds;
+pub use self::radial::RadialIndexMap;

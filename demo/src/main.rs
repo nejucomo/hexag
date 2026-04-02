@@ -3,7 +3,7 @@ use eframe::egui::{
     Widget,
 };
 use eframe::{Frame, NativeOptions, run_native};
-use hexgeo::AxialBounds;
+use hexgeo::RadialIndexMap;
 use hexgeo_egui::{HexOrientation, Wireframe};
 
 mod select_menu;
@@ -21,7 +21,7 @@ fn main() -> eframe::Result<()> {
 }
 
 struct App {
-    bounds: AxialBounds,
+    bounds: RadialIndexMap,
     hexor: HexOrientation,
     radius: usize,
 }
@@ -30,7 +30,7 @@ impl Default for App {
     fn default() -> Self {
         let radius = 3;
         Self {
-            bounds: AxialBounds::new(radius),
+            bounds: RadialIndexMap::new(radius),
             hexor: HexOrientation::default(),
             radius,
         }
@@ -41,7 +41,7 @@ impl eframe::App for App {
     fn update(&mut self, ctx: &Context, _frame: &mut Frame) {
         if self.radius != self.bounds.radius() {
             // The user changed the radius, reset the board:
-            self.bounds = AxialBounds::new(self.radius);
+            self.bounds = RadialIndexMap::new(self.radius);
         }
 
         TopBottomPanel::top("my_panel").show(ctx, |ui| {

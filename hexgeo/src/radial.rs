@@ -1,12 +1,12 @@
 use crate::Axials;
 
-/// Precomputed coordinate bounds for quick conversion between axial coords and usize storage indices
+/// Precomputed coordinate bounds for quick conversion between axial coords and usize storage indices for a disc / hex of hexes of a given radius
 ///
 /// # Performance Tradeoffs
 ///
 /// This design is optimized for a relatively small radius and stores `O(radius^2)` [usize]s to reduce conversion cost. Note/TODO: there has been no profiling of this pre-computation approach versus a purely arithmetic conversion implementation for varying radii.
 #[derive(Debug, Clone)]
-pub struct AxialBounds {
+pub struct RadialIndexMap {
     radius: usize,
 
     // row for each r in -R..=R
@@ -16,7 +16,7 @@ pub struct AxialBounds {
     index_rows: Vec<usize>,
 }
 
-impl AxialBounds {
+impl RadialIndexMap {
     pub fn new(radius: usize) -> Self {
         let radius_i = radius as isize;
         let rows = 2 * radius + 1;
