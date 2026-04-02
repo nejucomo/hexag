@@ -1,10 +1,11 @@
 //! Hex geometry in [f32] cartesian space
 //!
-//! The base geometry is defined for an equilateral hexagon inscribed in the rectangle from `(-1, -1)` to `(1, 1)`. There are two supported orientations, defined by the symmetrically named constants in [flat_top] and [pointy_top].
+#![doc = include_str!("geom/overview.md")]
 //!
-//! # Diagrams
+//! The base geometry is defined for an equilateral hexagon inscribed in the rectangle from `(-1, -1)` to `(1, 1)`.
 //!
 #![doc = include_str!("geom/overview.svg")]
+
 mod orientation;
 mod pt;
 
