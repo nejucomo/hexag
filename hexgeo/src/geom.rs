@@ -41,12 +41,12 @@ pub mod flat_top {
     ///
     /// - **TODO: These were just copy-pasta and may not be precise.**
     pub const VERTICES: [Pos2; 6] = [
-        Pos2::new(0.0, -1.0),
-        Pos2::new(0.8660254, -0.5),
-        Pos2::new(0.8660254, 0.5),
-        Pos2::new(0.0, 1.0),
-        Pos2::new(-0.8660254, 0.5),
-        Pos2::new(-0.8660254, -0.5),
+        Pos2::new(-1.0, 0.0),
+        Pos2::new(-0.5, -0.8660254),
+        Pos2::new(0.5, -0.8660254),
+        Pos2::new(1.0, 0.0),
+        Pos2::new(0.5, 0.8660254),
+        Pos2::new(-0.5, 0.8660254),
     ];
 }
 
@@ -69,12 +69,12 @@ pub mod pointy_top {
     ///
     /// - **TODO: These were just copy-pasta and may not be precise.**
     pub const VERTICES: [Pos2; 6] = [
-        Pos2::new(-1.0, 0.0),
-        Pos2::new(-0.5, -0.8660254),
-        Pos2::new(0.5, -0.8660254),
-        Pos2::new(1.0, 0.0),
-        Pos2::new(0.5, 0.8660254),
-        Pos2::new(-0.5, 0.8660254),
+        Pos2::new(0.0, -1.0),
+        Pos2::new(0.8660254, -0.5),
+        Pos2::new(0.8660254, 0.5),
+        Pos2::new(0.0, 1.0),
+        Pos2::new(-0.8660254, 0.5),
+        Pos2::new(-0.8660254, -0.5),
     ];
 }
 
