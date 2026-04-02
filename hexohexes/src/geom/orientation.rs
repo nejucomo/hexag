@@ -1,53 +1,62 @@
-use crate::geom::{LONG_RADIUS, Pt, SHORT_RADIUS, flat_top, pointy_top};
+use std::fmt::Debug;
 
-use self::HexOrientation::*;
+use crate::geom::{FlatTop, PointyTop, Pt};
 
+/// Types which represent the hex orientations
+///
+/// All coordinates are for a hexagon centered at the origin, scaled to fix into the `(-1, -1)` to `(1, 1)` square. See [geom](crate::geom) for visualizations of the layout.
+pub trait HexOrientation: Copy + Clone + Debug + Default + Eq + PartialEq {
+    /// The width and height of the bounding rectangle centered at the origin
+    fn width_and_height(self) -> (f32, f32);
+
+    /// The q-basis vector in the axial coordinate system; see [Hex to Pixel: Axial Coordinates](https://www.redblobgames.com/grids/hexagons/#hex-to-pixel-axial)
+    fn q_basis(self) -> Pt;
+
+    /// The r-basis vector in the axial coordinate system; see [Hex to Pixel: Axial Coordinates](https://www.redblobgames.com/grids/hexagons/#hex-to-pixel-axial)
+    fn r_basis(self) -> Pt;
+
+    /// The six vertices of the hex.
+    fn vertices(self) -> [Pt; 6];
+}
+
+/// <u>D</u>ynamic <u>H</u>ex <u>O</u>rientation is a runtime switch on [HexOrientation]
 #[derive(Copy, Clone, Debug, Default, Eq, PartialEq)]
-pub enum HexOrientation {
+pub enum DHO {
     #[default]
     FlatTop,
     PointyTop,
 }
 
-impl HexOrientation {
+impl HexOrientation for DHO {
     #[inline]
-    pub fn width_and_height(self) -> (f32, f32) {
+    fn width_and_height(self) -> (f32, f32) {
         match self {
-            FlatTop => (LONG_RADIUS, SHORT_RADIUS),
-            PointyTop => (SHORT_RADIUS, LONG_RADIUS),
+            DHO::FlatTop => FlatTop.width_and_height(),
+            DHO::PointyTop => PointyTop.width_and_height(),
         }
     }
 
     #[inline]
-    pub fn q_basis(self) -> Pt {
+    fn q_basis(self) -> Pt {
         match self {
-            FlatTop => flat_top::BASIS_Q,
-            PointyTop => pointy_top::BASIS_Q,
+            DHO::FlatTop => FlatTop.q_basis(),
+            DHO::PointyTop => PointyTop.q_basis(),
         }
     }
 
     #[inline]
-    pub fn r_basis(self) -> Pt {
+    fn r_basis(self) -> Pt {
         match self {
-            FlatTop => flat_top::BASIS_R,
-            PointyTop => pointy_top::BASIS_R,
-        }
-    }
-
-    /// From center to the bottom-left of a bounding rectangle
-    #[inline]
-    pub fn bottom_left(self) -> Pt {
-        match self {
-            FlatTop => flat_top::BOTTOM_LEFT,
-            PointyTop => pointy_top::BOTTOM_LEFT,
+            DHO::FlatTop => FlatTop.r_basis(),
+            DHO::PointyTop => PointyTop.r_basis(),
         }
     }
 
     #[inline]
-    pub fn vertices(self) -> [Pt; 6] {
+    fn vertices(self) -> [Pt; 6] {
         match self {
-            FlatTop => todo!(),
-            PointyTop => todo!(),
+            DHO::FlatTop => FlatTop.vertices(),
+            DHO::PointyTop => PointyTop.vertices(),
         }
     }
 }
