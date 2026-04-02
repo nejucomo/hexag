@@ -1,8 +1,7 @@
 mod ext;
 
 use eframe::egui::{
-    CentralPanel, Context, MenuBar, Response, TopBottomPanel, Ui, ViewportBuilder, ViewportCommand,
-    Widget,
+    CentralPanel, Context, Key, Response, SidePanel, Ui, ViewportBuilder, ViewportCommand, Widget,
 };
 use eframe::{Frame, NativeOptions, run_native};
 use hexgeo::geom::DHO;
@@ -47,19 +46,21 @@ impl eframe::App for App {
             self.bounds = RadialIndexMap::new(self.radius);
         }
 
-        TopBottomPanel::top("my_panel").show(ctx, |ui| {
-            MenuBar::new().ui(ui, |ui| {
-                ui.menu_button("File", |ui| {
-                    if ui.button("Quit").clicked() {
-                        ui.ctx().send_viewport_cmd(ViewportCommand::Close);
-                    }
-                });
+        SidePanel::right("top_panel")
+            .resizable(false)
+            .show(ctx, |ui| {
+                if ui.button("Quit (ESC)").clicked() {
+                    ui.ctx().send_viewport_cmd(ViewportCommand::Close);
+                }
 
-                ui.menu_choice("Orientation", &mut self.dho, [DHO::FlatTop, DHO::PointyTop]);
-                ui.menu_choice("Radius", &mut self.radius, 0..=7);
+                ui.choice_frame("Orientation", &mut self.dho, [DHO::FlatTop, DHO::PointyTop]);
+                ui.choice_frame("Radius", &mut self.radius, 0..=7);
             });
-        });
         CentralPanel::default().show(ctx, |ui| ui.add(self));
+
+        if ctx.input(|i| i.key_pressed(Key::Escape)) {
+            ctx.send_viewport_cmd(ViewportCommand::Close);
+        }
     }
 }
 
